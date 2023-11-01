@@ -5,7 +5,7 @@ import { styles } from "./styles";
 export function Header() {
     return (
         <View style={styles.container}>
-            <Image style={styles.imageLogo} source={require('../../../assets/Logo.png')}/>
+            <Image style={styles.imageLogo} source={require('../../../assets/app_logo.png')}/>
         </View>
     );
 }
