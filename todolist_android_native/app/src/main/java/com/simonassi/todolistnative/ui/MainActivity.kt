@@ -2,17 +2,14 @@ package com.simonassi.todolistnative.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.simonassi.todolistnative.databinding.ActivityMainBinding
 import com.simonassi.todolistnative.model.Todo
-import java.util.*
-import kotlin.properties.Delegates
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UpdateTodoListCallback {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var todoAdapter: TodoListAdapter
-    private var todoList: MutableList<Todo> = mutableListOf()
-
+    private val adapter = TodoAdapter(mutableListOf(), this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,27 +18,25 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        todoAdapter = TodoListAdapter()
-        binding.todoList.adapter = todoAdapter
-        todoAdapter.submitList(todoList)
+        binding.todoList.adapter = adapter
+        binding.todoList.layoutManager = LinearLayoutManager(this)
         createListeners()
     }
 
     private fun createListeners() {
-
         binding.addTodoBtn.setOnClickListener{
             if(binding.todoInputText.text.toString().isNotEmpty()){
                 val newTodo = Todo(description = binding.todoInputText.text.toString(), done = false)
-                todoList.add(newTodo)
-                onListUpdated()
+                adapter.todoList.add(newTodo)
+                onListChanged()
+                adapter.notifyItemInserted(adapter.todoList.size-1)
             }
         }
     }
 
-    private fun onListUpdated() {
-        binding.tvShowCreated.text = todoList.size.toString()
-        binding.tvShowFinished.text = todoList.filter { it.done }.size.toString()
-        todoAdapter.submitList(todoList)
+    override fun onListChanged() {
+        binding.tvShowCreated.text = adapter.todoList.size.toString()
+        binding.tvShowFinished.text = adapter.todoList.filter { it.done }.size.toString()
     }
 
 }
