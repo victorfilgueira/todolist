@@ -10,10 +10,19 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     border: "1px solid #333333",
   },
-  icon: {
+  checkIcon: {
     alignItems: "center",
     justifyContent: "center",
     margin: 10,
+    width: 30,
+    height: 30
+  },
+  deleteIcon: {
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 10,
+    width: 30,
+    height: 40
   },
   todoText: {
     color: "#D9D9D9",

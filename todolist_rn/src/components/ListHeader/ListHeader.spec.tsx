@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../test-utils';
-import { todos } from '../../mock/todos_mock';
+import { todos } from '../../mocks/todos_mock';
 import { ListHeader } from '.';
 
 describe('ListHeader component', () => {
