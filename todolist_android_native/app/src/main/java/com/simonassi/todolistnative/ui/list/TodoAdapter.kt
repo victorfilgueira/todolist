@@ -1,4 +1,4 @@
-package com.simonassi.todolistnative.ui
+package com.simonassi.todolistnative.ui.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,11 @@ import com.simonassi.todolistnative.databinding.TodoItemBinding
 import com.simonassi.todolistnative.model.Todo
 
 
-class TodoAdapter(val todoList: MutableList<Todo>, val onListChangedCallback: UpdateTodoListCallback) :
-    RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+class TodoAdapter(
+    var todoList: MutableList<Todo>,
+    val onListChangedCallback: UpdateTodoListCallback,
+    val todoManager: TodoManager
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         return TodoViewHolder(
@@ -34,24 +37,22 @@ class TodoAdapter(val todoList: MutableList<Todo>, val onListChangedCallback: Up
                 binding.checkedImageView.visibility = if (done) View.VISIBLE else View.GONE
                 binding.uncheckedImageView.visibility = if (done) View.GONE else View.VISIBLE
 
-                binding.uncheckedImageView.setOnClickListener { changeCheckedState(position) }
-                binding.checkedImageView.setOnClickListener { changeCheckedState(position) }
+                binding.uncheckedImageView.setOnClickListener {
+                    todoManager.changeCheckedState(todoList, position)
+                    notifyItemChanged(position)
+                }
 
-                binding.trashImageView.setOnClickListener { deleteTodo(position)}
+                binding.checkedImageView.setOnClickListener {
+                    todoManager.changeCheckedState(todoList, position)
+                    notifyItemChanged(position)
+                }
+
+                binding.trashImageView.setOnClickListener {
+                    todoManager.deleteTodo(todoList, position)
+                    notifyItemRemoved(position)
+                    onListChangedCallback.onListChanged()
+                }
             }
-        }
-
-        private fun changeCheckedState(position: Int) {
-            val selectedItem = todoList[position]
-            selectedItem.done = !selectedItem.done
-            todoList[position] = selectedItem
-            notifyItemChanged(position)
-        }
-
-        private fun deleteTodo(position: Int) {
-            todoList.removeAt(position)
-            notifyItemRemoved(position)
-            onListChangedCallback.onListChanged()
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.simonassi.todolistnative.ui
+package com.simonassi.todolistnative.ui.list
 
 interface UpdateTodoListCallback {
     fun onListChanged()

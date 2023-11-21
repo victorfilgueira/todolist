@@ -6,11 +6,14 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simonassi.todolistnative.databinding.ActivityMainBinding
 import com.simonassi.todolistnative.model.Todo
+import com.simonassi.todolistnative.ui.list.TodoAdapter
+import com.simonassi.todolistnative.ui.list.TodoManager
+import com.simonassi.todolistnative.ui.list.UpdateTodoListCallback
 
 class MainActivity : AppCompatActivity(), UpdateTodoListCallback {
 
     private lateinit var binding: ActivityMainBinding
-    private val adapter = TodoAdapter(mutableListOf(), this)
+    private val adapter = TodoAdapter(mutableListOf(), this, TodoManager())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
