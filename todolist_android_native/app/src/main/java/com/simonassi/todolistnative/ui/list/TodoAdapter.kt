@@ -40,11 +40,13 @@ class TodoAdapter(
                 binding.uncheckedImageView.setOnClickListener {
                     todoManager.changeCheckedState(todoList, position)
                     notifyItemChanged(position)
+                    onListChangedCallback.onListChanged()
                 }
 
                 binding.checkedImageView.setOnClickListener {
                     todoManager.changeCheckedState(todoList, position)
                     notifyItemChanged(position)
+                    onListChangedCallback.onListChanged()
                 }
 
                 binding.trashImageView.setOnClickListener {
