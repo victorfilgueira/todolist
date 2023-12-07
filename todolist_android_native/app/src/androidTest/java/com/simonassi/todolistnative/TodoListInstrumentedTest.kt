@@ -35,7 +35,7 @@ class TodoListInstrumentedTest {
 
     @Test
     fun shouldRenderNumberOfTasks() {
-        val taskNumber = 10
+        val taskNumber = 20
         for (i in 1..taskNumber){
             onView(withId(R.id.todoInputText)).perform(typeText("Tarefa $i"))
             onView(withId(R.id.addTodoBtn)).perform(click())

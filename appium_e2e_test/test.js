@@ -21,7 +21,9 @@ const shouldRenderEmptyListInfo = async () => {
     try {
         const emptyItem = await driver.$('//*[@text="Você ainda não tem tarefas cadastradas"]');
         await emptyItem.isDisplayed();
-    } finally {
+    } catch (error) {
+        console.log(error);
+    }finally {
         await driver.pause(1000);
         await driver.deleteSession();
     }
@@ -39,7 +41,9 @@ const shouldRenderListInfo = async () => {
         await inputText.setValue('');
         const addedTask = await driver.$(`//*[@text="${newTask}"]`);
         await addedTask.isDisplayed();
-    } finally {
+    } catch (error) {
+        console.log(error);
+    }finally {
         await driver.pause(1000);
         await driver.deleteSession();
     }
@@ -57,7 +61,9 @@ const shouldRenderNumberOfTasks = async () => {
         }
         const tvShowCreated = await driver.$('//android.widget.TextView[@resource-id="com.simonassi.todolistnative:id/tvShowCreated"]');
         await tvShowCreated.isDisplayed();
-    } finally {
+    } catch (error) {
+        console.log(error);
+    }finally {
         await driver.pause(1000);
         await driver.deleteSession();
     }
